@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Editor from "./editor/editor";
+import { projectFirestore } from "./firebase/config";
+import Sidebar from "./sidebar/sidebar";
 
 function App() {
+  const [notes, setNotes] = useState({
+    selectedNoteIndex: null,
+    selectedNote: null,
+    allNotes: null,
+  });
+  const { selectedNoteIndex, selectedNote, allNotes } = notes;
+
+  const selectNote = (note, index) => {
+    setNotes({ ...notes, selectedNoteIndex: index, selectedNote: note });
+  };
+
+  const deleteNote = (note) => {
+    projectFirestore.collection("notes").doc(note.id).delete();
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Sidebar
+        selectedNoteIndex={selectedNoteIndex}
+        setNotes={setNotes}
+        selectNote={selectNote}
+        notes={notes}
+      />
+      {selectedNote && (
+        <Editor
+          note={allNotes}
+          selectedNotesIndex={selectedNoteIndex}
+          selectedNote={selectedNote}
+          deleteNote={deleteNote}
+        />
+      )}
     </div>
   );
 }
