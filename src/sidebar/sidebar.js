@@ -7,47 +7,79 @@ import SidebarItem from "../sidebaritem/sidebarItem";
 import useFirestore from "../hooks/useFirestore";
 import firebase, { projectFirestore } from "../firebase/config";
 
-const Sidebar = ({ classes, selectedNoteIndex, selectNote }) => {
-  const [note, setNote] = useState({
+const Sidebar = ({ classes, note, setNote }) => {
+  const [newNote, setNewNote] = useState({
     addingNote: false,
-    title: null,
+    title: "",
   });
-  const { addingNote, title } = note;
+
   const { allNotes } = useFirestore("notes");
 
-  const newNote = () => {
-    setNote({
-      ...note,
-      addingNote: !addingNote,
-    });
-  };
+  const { addingNote, title } = newNote;
 
-  const updateTitle = (e) => {
-    const textTitle = e.target.value;
-    setNote({ ...note, title: textTitle });
-  };
+  useEffect(() => {
+    setNote({ ...note, selectedNote: allNotes[note.selectedNoteIndex] });
+  }, [allNotes, note.selectedNote]);
 
+  const createNewNote = () => {
+    setNewNote({ ...newNote, addingNote: !addingNote });
+  };
   const addNewNote = () => {
-    projectFirestore
-      .collection("notes")
-      .add({
+    if (title === "") {
+      alert("Title can't be empty!!");
+    } else {
+      projectFirestore.collection("notes").add({
         title: title,
         body: "",
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        setNote({ addingNote: !addingNote, title: null });
       });
+      setNewNote({ title: null, addingNote: false });
+      setNote({
+        ...note,
+        selectedNoteIndex: 0,
+        selectedNote: null,
+      });
+    }
+  };
+  const updateTitle = (e) => {
+    const text = e.target.value;
+    setNewNote({ ...newNote, title: text });
   };
 
-  const deleteNote = (note) => {
-    projectFirestore.collection("notes").doc(note.id).delete();
-    // console.log(note);
+  const selectNote = (note, index) => {
+    setNote({ ...note, selectedNote: note, selectedNoteIndex: index });
+  };
+
+  const deleteNote = (notee, index) => {
+    projectFirestore.collection("notes").doc(notee.id).delete();
+    if (note.selectedNoteIndex === index) {
+      setNote({ ...note, selectedNoteIndex: null, selectedNote: null });
+    } else if (index > note.selectedNoteIndex) {
+      setNote({
+        ...note,
+        selectedNoteIndex: note.selectedNoteIndex,
+        selectedNote: allNotes[note.selectedNoteIndex],
+      });
+    } else {
+      note.selectedNoteIndex === 0
+        ? setNote({
+            ...note,
+            selectedNoteIndex: note.selectedNoteIndex,
+            selectedNote: allNotes[note.selectedNoteIndex],
+          })
+        : allNotes.length > 1
+        ? setNote({
+            ...note,
+            selectedNoteIndex: note.selectedNoteIndex - 1,
+            selectedNote: allNotes[note.selectedNoteIndex - 1],
+          })
+        : setNote({ ...note, selectedNoteIndex: null, selectedNote: null });
+    }
   };
 
   return (
     <div className={classes.sidebarContainer}>
-      <Button className={classes.newNoteBtn} onClick={newNote}>
+      <Button className={classes.newNoteBtn} onClick={createNewNote}>
         {addingNote ? "Cancel" : "New Note"}
       </Button>
       {addingNote && (
@@ -56,6 +88,7 @@ const Sidebar = ({ classes, selectedNoteIndex, selectNote }) => {
             className={classes.newNoteInput}
             type="text"
             placeholder="Enter title"
+            value={title}
             onChange={updateTitle}
           />
           <Button className={classes.newNoteSubmitBtn} onClick={addNewNote}>
@@ -71,9 +104,9 @@ const Sidebar = ({ classes, selectedNoteIndex, selectNote }) => {
                 <SidebarItem
                   _note={_note}
                   _index={_index}
-                  selectedNoteIndex={selectedNoteIndex}
                   selectNote={selectNote}
-                  deleteNote={() => deleteNote(_note)}
+                  selectedNoteIndex={note.selectedNoteIndex}
+                  deleteNote={deleteNote}
                 />
                 <Divider />
               </div>
