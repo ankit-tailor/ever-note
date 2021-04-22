@@ -1,40 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Editor from "./editor/editor";
-import { projectFirestore } from "./firebase/config";
+import useFirestore from "./hooks/useFirestore";
 import Sidebar from "./sidebar/sidebar";
 
 function App() {
-  const [notes, setNotes] = useState({
-    selectedNoteIndex: null,
+  const [note, setNote] = useState({
     selectedNote: null,
-    allNotes: null,
+    selectedNoteIndex: null,
+    notes: null,
   });
-  const { selectedNoteIndex, selectedNote, allNotes } = notes;
+  const { allNotes } = useFirestore("notes");
+  const { selectedNote } = note;
 
-  const selectNote = (note, index) => {
-    setNotes({ ...notes, selectedNoteIndex: index, selectedNote: note });
-  };
-
-  const deleteNote = (note) => {
-    projectFirestore.collection("notes").doc(note.id).delete();
-  };
+  useEffect(() => {
+    setNote({ ...note, notes: allNotes });
+  }, [allNotes]);
 
   return (
     <div className="App">
-      <Sidebar
-        selectedNoteIndex={selectedNoteIndex}
-        setNotes={setNotes}
-        selectNote={selectNote}
-        notes={notes}
-      />
-      {selectedNote && (
-        <Editor
-          note={allNotes}
-          selectedNotesIndex={selectedNoteIndex}
-          selectedNote={selectedNote}
-          deleteNote={deleteNote}
-        />
-      )}
+      <Sidebar setNote={setNote} note={note} />
+      {selectedNote && <Editor setNote={setNote} note={note} />}
     </div>
   );
 }
