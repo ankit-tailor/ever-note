@@ -14,9 +14,9 @@ const SidebarItem = ({
   selectNote,
   deleteNote,
 }) => {
-  const confirmDelete = (note) => {
+  const confirmDelete = (note, index) => {
     if (window.confirm(`Are you sure you want to delete ${note.title}`)) {
-      deleteNote(note);
+      deleteNote(note, index);
     }
   };
   return (
@@ -39,7 +39,7 @@ const SidebarItem = ({
         </div>
         <DeleteIcon
           className={classes.deleteIcon}
-          onClick={() => confirmDelete(_note)}
+          onClick={() => confirmDelete(_note, _index)}
         />
       </ListItem>
     </div>
