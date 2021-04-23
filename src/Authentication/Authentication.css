@@ -1,0 +1,91 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+  background-color: #fff;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  place-content: center;
+  color: #000000;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+}
+
+.login-form > h2 {
+  text-decoration: underline;
+}
+
+.form {
+  width: 50%;
+  height: 63%;
+  background-color: #fff;
+  margin: auto;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 95%;
+  border: 0;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #03203c;
+  width: 95%;
+  border: 0;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  color: #ffffff;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.form button:hover,
+.form button:active,
+.form button:focus {
+  background: #011222;
+}
+
+@media screen and (max-width: 940px) {
+  .form input {
+    width: 80%;
+  }
+  .form button {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .form {
+    width: 80%;
+    height: 80%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .form {
+    width: 95%;
+    height: 95%;
+  }
+  .form input {
+    width: 95%;
+  }
+  .form button {
+    width: 95%;
+  }
+}
