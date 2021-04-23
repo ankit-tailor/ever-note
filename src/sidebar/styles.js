@@ -21,16 +21,16 @@ const styles = (theme) => ({
     height: "35px",
     borderBottom: "1px solid black",
     borderRadius: "0px",
-    backgroundColor: "#29487d",
+    backgroundColor: "#03203C",
     color: "white",
     "&:hover": {
-      backgroundColor: "#88a2ce",
+      backgroundColor: "#011222",
     },
   },
   sidebarContainer: {
     marginTop: "0px",
     width: "300px",
-    height: "100vh",
+    height: "1000px",
     boxSizing: "border-box",
     float: "left",
     overflowY: "scroll",
@@ -44,14 +44,31 @@ const styles = (theme) => ({
     border: "none",
     paddingLeft: "5px",
     "&:focus": {
-      outline: "2px solid rgba(81, 203, 238, 1)",
+      outline: "2px solid #011222",
     },
   },
   newNoteSubmitBtn: {
     width: "100%",
-    backgroundColor: "#28787c",
+    backgroundColor: "#03203C",
     borderRadius: "0px",
     color: "white",
+    transition: "all 0.2 linear",
+    "&:hover": {
+      backgroundColor: "#011222",
+    },
+  },
+  signoutBtn: {
+    position: "sticky",
+    bottom: "0",
+    width: "100%",
+    height: "35px",
+    borderBottom: "1px solid black",
+    borderRadius: "0px",
+    backgroundColor: "#03203C",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#011222",
+    },
   },
 });
 
