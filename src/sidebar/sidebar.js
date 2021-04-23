@@ -5,7 +5,7 @@ import List from "@material-ui/core/List";
 import { Divider, Button } from "@material-ui/core";
 import SidebarItem from "../sidebaritem/sidebarItem";
 import useFirestore from "../hooks/useFirestore";
-import firebase, { projectFirestore } from "../firebase/config";
+import firebase, { projectAuth, projectFirestore } from "../firebase/config";
 
 const Sidebar = ({ classes, note, setNote }) => {
   const [newNote, setNewNote] = useState({
@@ -13,7 +13,9 @@ const Sidebar = ({ classes, note, setNote }) => {
     title: "",
   });
 
-  const { allNotes } = useFirestore("notes");
+  const { allNotes } = useFirestore(
+    `users/${projectAuth.currentUser.uid}/notes`
+  );
 
   const { addingNote, title } = newNote;
 
@@ -24,15 +26,18 @@ const Sidebar = ({ classes, note, setNote }) => {
   const createNewNote = () => {
     setNewNote({ ...newNote, addingNote: !addingNote });
   };
-  const addNewNote = () => {
-    if (title === "") {
+  const addNewNote = (e) => {
+    e.preventDefault();
+    if (newNote.title === "") {
       alert("Title can't be empty!!");
     } else {
-      projectFirestore.collection("notes").add({
-        title: title,
-        body: "",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      projectFirestore
+        .collection(`users/${projectAuth.currentUser.uid}/notes`)
+        .add({
+          title: title,
+          body: "",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
       setNewNote({ title: null, addingNote: false });
       setNote({
         ...note,
@@ -51,7 +56,10 @@ const Sidebar = ({ classes, note, setNote }) => {
   };
 
   const deleteNote = (notee, index) => {
-    projectFirestore.collection("notes").doc(notee.id).delete();
+    projectFirestore
+      .collection(`users/${projectAuth.currentUser.uid}/notes`)
+      .doc(notee.id)
+      .delete();
     if (note.selectedNoteIndex === index) {
       setNote({ ...note, selectedNoteIndex: null, selectedNote: null });
     } else if (index > note.selectedNoteIndex) {
@@ -84,16 +92,19 @@ const Sidebar = ({ classes, note, setNote }) => {
       </Button>
       {addingNote && (
         <div>
-          <input
-            className={classes.newNoteInput}
-            type="text"
-            placeholder="Enter title"
-            value={title}
-            onChange={updateTitle}
-          />
-          <Button className={classes.newNoteSubmitBtn} onClick={addNewNote}>
-            Add Note
-          </Button>
+          <form onSubmit={addNewNote}>
+            <input
+              className={classes.newNoteInput}
+              type="text"
+              placeholder="Enter title"
+              value={title}
+              onChange={updateTitle}
+              required
+            />
+            <Button type="submit" className={classes.newNoteSubmitBtn}>
+              Add Note
+            </Button>
+          </form>
         </div>
       )}
       <List>
@@ -113,6 +124,12 @@ const Sidebar = ({ classes, note, setNote }) => {
             );
           })}
       </List>
+      <Button
+        className={classes.signoutBtn}
+        onClick={() => projectAuth.signOut()}
+      >
+        SignOut
+      </Button>
     </div>
   );
 };
