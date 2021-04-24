@@ -49,6 +49,35 @@ const Editor = ({ classes, note }) => {
     setEditorNoteTitle(e.target.value);
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
+
   return (
     <div className={classes.editorContainer}>
       <BorderColorIcon className={classes.editIcon} />
@@ -63,6 +92,8 @@ const Editor = ({ classes, note }) => {
         id="quill"
         onChange={updateNote}
         value={editorNoteBody}
+        modules={modules}
+        formats={formats}
       ></ReactQuill>
     </div>
   );
