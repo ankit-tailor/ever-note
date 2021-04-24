@@ -8,7 +8,6 @@ const Authentication = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +15,6 @@ const Authentication = () => {
       projectAuth
         .signInWithEmailAndPassword(email, password)
         .then((user) => {
-          setErrorMessage("Success");
           setEmail("");
           setPassword("");
         })
@@ -35,7 +33,6 @@ const Authentication = () => {
       projectAuth
         .createUserWithEmailAndPassword(email, password)
         .then((user) => {
-          setErrorMessage("Success");
           setEmail("");
           setPassword("");
         })
@@ -73,7 +70,14 @@ const Authentication = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">{isSignIn ? "Sign In" : "Sign Up"}</button>
-          <button type="submit">Guest Login</button>
+          <button
+            onClick={() => {
+              setEmail("tester@test.com");
+              setPassword("123456");
+            }}
+          >
+            Guest Login
+          </button>
           {isSignIn ? (
             <p style={{ color: "black" }}>
               New user ?{" "}
@@ -85,7 +89,6 @@ const Authentication = () => {
                 }}
                 onClick={() => {
                   setIsSignIn(false);
-                  setErrorMessage("");
                   setEmail("");
                   setPassword("");
                 }}
@@ -103,7 +106,6 @@ const Authentication = () => {
                 }}
                 onClick={() => {
                   setIsSignIn(true);
-                  setErrorMessage("");
                   setEmail("");
                   setPassword("");
                 }}
