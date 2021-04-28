@@ -20,6 +20,7 @@ body {
   height: 100%;
   box-sizing: border-box;
   width: 100%;
+  background-color: #fff;
 }
 .ql-container {
   box-sizing: border-box;
