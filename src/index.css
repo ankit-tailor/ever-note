@@ -29,6 +29,7 @@ body {
 }
 .ql-editor {
   cursor: text;
+  word-break: break-all;
 }
 .MuiListItem-root.Mui-selected {
   background-color: #d4d8e8 !important;
