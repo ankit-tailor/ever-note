@@ -76,45 +76,45 @@ const Authentication = () => {
               setPassword("123456");
             }}
           >
-            Guest Login
+            Test Login
           </button>
-          {isSignIn ? (
-            <p style={{ color: "black" }}>
-              New user ?{" "}
-              <span
-                style={{
-                  color: "#03203c",
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-                onClick={() => {
-                  setIsSignIn(false);
-                  setEmail("");
-                  setPassword("");
-                }}
-              >
-                Register
-              </span>
-            </p>
-          ) : (
-            <p style={{ color: "black" }}>
-              <span
-                style={{
-                  color: "#03203c",
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-                onClick={() => {
-                  setIsSignIn(true);
-                  setEmail("");
-                  setPassword("");
-                }}
-              >
-                Sing In
-              </span>
-            </p>
-          )}
         </form>
+        {isSignIn ? (
+          <p style={{ color: "black" }}>
+            New user ?{" "}
+            <span
+              style={{
+                color: "#03203c",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={() => {
+                setIsSignIn(false);
+                setEmail("");
+                setPassword("");
+              }}
+            >
+              Register
+            </span>
+          </p>
+        ) : (
+          <p style={{ color: "black" }}>
+            <span
+              style={{
+                color: "#03203c",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={() => {
+                setIsSignIn(true);
+                setEmail("");
+                setPassword("");
+              }}
+            >
+              Sing In
+            </span>
+          </p>
+        )}
         <ToastContainer />
       </div>
     </div>
