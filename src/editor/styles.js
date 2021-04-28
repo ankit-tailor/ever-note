@@ -4,7 +4,7 @@ const styles = (theme) => ({
     height: "calc(100% - 35px)",
     position: "absolute",
     left: "0",
-    width: "300px",
+    // width: "300px",
     boxShadow: "0px 0px 2px black",
   },
   titleInput: {
@@ -13,14 +13,14 @@ const styles = (theme) => ({
     border: "none",
     padding: "5px",
     fontSize: "24px",
-    width: "calc(100% - 300px)",
-    backgroundColor: "#03203C",
+    width: "100%",
     color: "white",
+    backgroundColor: "#03203C",
     paddingLeft: "50px",
   },
   editIcon: {
     position: "absolute",
-    left: "310px",
+    marginLeft: "1rem",
     top: "12px",
     color: "white",
     width: "10",
@@ -29,6 +29,19 @@ const styles = (theme) => ({
   editorContainer: {
     height: "100vh",
     boxSizing: "border-box",
+    width: "100%",
+  },
+  editorHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#03203C",
+  },
+  expandIcon: {
+    fontSize: "2rem !important",
+    cursor: "pointer",
+    color: "white",
+    marginRight: "1rem",
   },
 });
 
