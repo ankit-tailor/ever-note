@@ -19,8 +19,7 @@ body {
 .quill {
   height: 100%;
   box-sizing: border-box;
-  width: calc(100% - 300px);
-  float: left;
+  width: 100%;
 }
 .ql-container {
   box-sizing: border-box;
@@ -38,4 +37,27 @@ body {
   position: absolute;
   top: 50px;
   left: calc(50% - 165px);
+}
+.container {
+  display: flex;
+}
+#sidebar {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5%;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
