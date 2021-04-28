@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Authentication from "./Authentication/Authentication";
 import Editor from "./editor/editor";
 import { projectAuth } from "./firebase/config";
-import useFirestore from "./hooks/useFirestore";
 import Sidebar from "./sidebar/sidebar";
 
 function App() {
@@ -16,15 +15,17 @@ function App() {
   const { selectedNote } = note;
 
   return (
-    <div className="App">
+    <div id="App" className="App">
       {!user ? (
         <Authentication />
       ) : (
-        <div>
+        <div className="container">
           <Sidebar setNote={setNote} note={note} />
           {selectedNote && <Editor setNote={setNote} note={note} />}
         </div>
       )}
+      {/* <Sidebar setNote={setNote} note={note} />
+      {selectedNote && <Editor setNote={setNote} note={note} />} */}
     </div>
   );
 }
