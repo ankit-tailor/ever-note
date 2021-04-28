@@ -30,11 +30,9 @@ const styles = (theme) => ({
   sidebarContainer: {
     marginTop: "0px",
     width: "300px",
-    height: "1000px",
+    height: "100%",
     boxSizing: "border-box",
-    float: "left",
     overflowY: "scroll",
-    overflowX: "hidden",
   },
   newNoteInput: {
     width: "100%",
