@@ -86,7 +86,7 @@ const Sidebar = ({ classes, note, setNote }) => {
   };
 
   return (
-    <div className={classes.sidebarContainer}>
+    <div id="sidebar" className={classes.sidebarContainer}>
       <Button className={classes.newNoteBtn} onClick={createNewNote}>
         {addingNote ? "Cancel" : "New Note"}
       </Button>
